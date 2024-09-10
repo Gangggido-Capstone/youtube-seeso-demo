@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import InitSeeso from "./InitSeeso";
 import "../../css/VideoGazeTracker.css";
 
 const VideoGazeTracker = () => {
     const { videoId } = useParams();
+
+    useEffect(() => {
+        // Spring Boot로 videoId를 POST 요청으로 전송
+        const sendVideoIdToBackend = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/api/video', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ videoId }), // videoId를 JSON으로 전송
+                });
+
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        };
+
+        sendVideoIdToBackend();
+    }, [videoId]);
 
     return (
         <div className='video-player-wrapper'>
@@ -14,7 +34,7 @@ const VideoGazeTracker = () => {
 
             {/* YouTube Iframe */}
             <iframe
-                credentialless ='true'
+                credentialless='true'
                 title='YouTube video player'
                 src={`https://www.youtube.com/embed/${videoId}`}
                 allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
@@ -24,9 +44,7 @@ const VideoGazeTracker = () => {
             />
 
             <div className='back-button-container'>
-                <a
-                    href='/'
-                    className='back-button'>
+                <a href='/' className='back-button'>
                     뒤로가기
                 </a>
             </div>
