@@ -69,6 +69,10 @@ public class YoutubeService {
         videoRequest.setId(Collections.singletonList(String.join(",", videoIds)));
         videoRequest.setKey(apiKey);
 
+        YouTube.Videos test = youtube.videos();
+        System.out.println(test);
+
+
         VideoListResponse videoResponse = videoRequest.execute();
         return videoResponse.getItems();
     }
