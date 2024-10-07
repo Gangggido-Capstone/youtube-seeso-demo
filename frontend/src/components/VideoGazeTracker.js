@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { embedVideo } from "./api/youtubeApi.js";
 import InitSeeso from "./InitSeeso";
 import "../../css/VideoGazeTracker.css";
 
@@ -107,14 +108,24 @@ const VideoGazeTracker = () => {
     };
 
     // 재생 버튼을 클릭했을 때 호출되는 함수
-    const handlePlay = () => {
+    const handlePlay = async() => {
         if (player && player.playVideo) {
             // 플레이어가 준비되었고, playVideo 함수가 있을 경우
             player.playVideo(); // 동영상을 재생
             startTracking(); // 시선 추적 시작
+
+            try {
+                // Call the embedVideo function and send videoId to the backend
+                const response = await embedVideo(videoId);
+                console.log("VideoId sent to backend:", response);
+            } catch (error) {
+                console.error("Error sending videoId to backend:", error);
+            }
         } else {
             console.error("Player is not ready or playVideo is not available"); // 플레이어가 준비되지 않은 경우 에러 출력
         }
+
+
     };
 
     // 정지 버튼을 클릭했을 때 호출되는 함수
