@@ -76,7 +76,7 @@ public class YoutubeService {
     public Video getVideoById(String videoId) throws IOException {
 
         YouTube.Videos.List request = youtube.videos()
-                .list(Arrays.asList("snippet", "contentDetails", "statistics"))
+                .list(Arrays.asList("snippet"))
                 .setId(Collections.singletonList(videoId))
                 .setKey(apiKey); // API 키를 설정합니다.
 

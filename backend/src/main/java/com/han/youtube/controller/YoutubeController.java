@@ -52,4 +52,14 @@ public class YoutubeController {
             return null; // 에러 발생 시 null 반환
         }
     }
+
+    @GetMapping("/api/history")
+    public Video getVideoHistory(@RequestParam String videoId) {
+        try {
+            return youtubeService.getVideoById(videoId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null; // 에러 발생 시 null 반환
+        }
+    }
 }
